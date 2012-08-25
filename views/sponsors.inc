@@ -1,0 +1,1 @@
+<!-- Display Sponsors. Preferably according to current event being displayed. -->

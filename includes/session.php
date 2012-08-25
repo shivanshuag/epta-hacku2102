@@ -6,10 +6,10 @@ function logged_in(){
     return isset($_SESSION['username']);
 }
 function set_session($user) {
-    //$_SESSION['id']=$user['id'];
-    $_SESSION['username']=$user['email'];
-    $_SESSION['name'] = $user['name'];
-    $_SESSION['college_id']=$user['college_id'];
+    $_SESSION['uid']=$user['uid'];
+    $_SESSION['username']=$user['username'];
+    $_SESSION['email'] = $user['email'];
+    $_SESSION['role']=$user['role'];
 }
 
 function destroy_session() {

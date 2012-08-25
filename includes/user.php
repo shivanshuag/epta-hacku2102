@@ -42,12 +42,12 @@ function verify_credentials($input) {
     $pass = sha1($input['password']);
     $query = "SELECT * FROM users WHERE username=:username AND hashed_password=:pass LIMIT 1";
     $q = $connection->prepare($query);
-	if($q->execute(array(':username' => $ar['name'], ':pass' => $pass))) {
+	if($q->execute(array(':username' => $input['username'], ':pass' => $pass))) {
 		if($user = $q->fetch(PDO::FETCH_ASSOC)){
-			if( $user['role'] == "teacher"){
-				$class = $connection->prepare("SELECT class FROM teacher WHERE uid=:uid")->execute(array(':uid' => $user['uid']))-> fetchALl(PDO::FETCH_NUM);
-				$subject = $connection->prepare("SELECT subject FROM teacher WHERE uid=:uid")->execute(array(':uid' => $user['uid']))-> fetchALl(PDO::FETCH_NUM);
-			}	
+		//	if( $user['role'] == "teacher"){
+		//		$class = $connection->prepare("SELECT class FROM teacher WHERE uid=:uid")->execute(array(':uid' => $user['uid']))-> fetchALl(PDO::FETCH_NUM);
+		//		$subject = $connection->prepare("SELECT subject FROM teacher WHERE uid=:uid")->execute(array(':uid' => $user['uid']))-> fetchALl(PDO::FETCH_NUM);
+		//	}	
 			return $user;
 		
 		}		
