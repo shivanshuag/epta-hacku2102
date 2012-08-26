@@ -1,4 +1,4 @@
-<?php
+<?php 
 /* function create_new_user($ar){ 
     global $connection;
     $secret_key = generate_secret_key();
@@ -55,6 +55,38 @@ function verify_credentials($input) {
     return NULL;
 }
 
+function get_teacher($uid){
+		global $connection;
+		$con = mysql_connect("localhost","root","");
+		 mysql_select_db("hacku", $con);
+		 if (!$con)
+		{
+
+  die('Could not connect: ' . mysql_error());
+  }
+		//echo "connected";
+		$var=mysql_query("SELECT * FROM teachers WHERE uid='$uid'",$con);
+		
+		//var_dump($var); 
+		
+		
+		
+		//$class = $connection->prepare("SELECT * FROM 'teachers' WHERE uid=:uid")->execute(array(':uid' => $uid));
+		//var_dump($class);
+		//$i = $class->fetch(PDO::FETCH_ASSOC);
+		$j=0;
+		while ($i = mysql_fetch_array($var)){
+			
+			$k="".$j;
+			$user_info[$k]['name'] = $i['class'];
+			$user_info[$k]['subject'] = $i['subject'];
+			$j++;
+			//$i = $class->fetch(PDO::FETCH_ASSOC);	
+		}
+		return($user_info);
+}		
+		//$subject = $connection->prepare("SELECT subject FROM teachers WHERE uid=:uid")->execute(array(':uid' => $user['uid']))-> fetchAll(PDO::FETCH_NUM);	
+		
 /* function get_user($e) {
     global $connection;
 	

@@ -3,4 +3,4 @@ RewriteEngine On
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_URI} !-d 
-RewriteRule ^(.*)$ class.php?q=$1 [QSA]
+RewriteRule ^(.*)$ index.php?q=$1 [QSA]
