@@ -11,7 +11,7 @@
 	
 	<style type="text/css">
 	
-	a:link {color:#FFFFFF;}    /* unvisited link */
+	a:link {color:#FFFFFF;} /* unvisited link */
 a:visited {color:#FFFFFF;} /* visited link */
 a:hover {color:#FFFFFF;}   /* mouse over link */
 a:active {color:#FFFFFF;}  /* selected link */
@@ -55,6 +55,7 @@ padding-top: 20px;
         padding-right: 150px;
 		 padding-left: 150px;
       }
+	  
     </style>
 	</head>
 	<body>
@@ -69,10 +70,10 @@ padding-top: 20px;
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">ePTA</a>
+          <a class="brand" href="#"><img src = "images/ePTA.png" width=75 height=25></a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
+              
               <li><a href="#about"></a></li>
               <li><a href="#contact"></a></li>
               
@@ -85,8 +86,8 @@ padding-top: 20px;
         </div>
       </div>
 	  </div>
-	
-	
+	  
+	  
 	
 	
 <?php
@@ -109,14 +110,18 @@ padding-top: 20px;
 	elseif(logged_in() && $_SESSION['role'] == "teacher"):
 		if(isset($_GET['q'])) $path = trim($_GET['q'], "/");
 		else $path="";
+		$path_copy=$path;
 		if($path == ""):
+	
 		$user_info = get_teacher($_SESSION['uid']);
 		$global_stats = get_global_stats($user_info);
 		$change['agraders'] = $global_stats['agraders'] - $global_stats['agraders_prev'] ;
 		$change['attention'] = $global_stats['attention']- $global_stats['attention_prev'];
 		$change['attendance'] = $global_stats['attendance']-$global_stats['attendance_prev'];
+		
 		?>
 		
+		<!-- <h3><a href="index.php"> <?php //echo $_SESSION['username'];?> </a><h3>
 		
 		
 		
@@ -126,12 +131,21 @@ padding-top: 20px;
 			
 			
 			<div class="hero-unit">
-				<p><b>Total Students:</b> <?php echo $global_stats['strength']; ?></p>
-				<p ><b>A Graders:</b> <?php echo $global_stats['agraders']; ?>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <?php
-				if($change['agraders']<0) echo'down by'; else echo'up by'; echo abs($change['agraders']); ?> 
+			
+			
+			
+			
+				<p><b>Total Students:</b><?php echo $global_stats['strength']; ?></p>
+				<p ><b>A Graders:</b> <?php echo $global_stats['agraders']; ?>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <?php
+				if($change['agraders']<0) echo'(down by '; else echo'(up by '; echo round(abs($change['agraders']),2).")"; ?> 
 				</p>
-				<p ><b>Need More Attention:</b> <?php echo $global_stats['attention']; ?>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<?php if($change['attention']<0) echo'down by'; else echo'up by'; echo abs($global_stats['attention']); ?></p>
-				 <p ><b>Average Attendance:</b><?php echo $global_stats['attendance']; ?>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <?php if($change['attendance']<0) echo'down by'; else echo'up by'; echo abs($global_stats['attendance']); ?></p>
+				<p ><b>Need More Attention:</b> <?php echo $global_stats['attention']; ?>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<?php if($change['attention']<0) echo'(down by '; else echo'(up by '; echo round(abs($global_stats['attention']),2).")"; ?></p>
+				 <p ><b>Average Attendance:</b><?php echo round($global_stats['attendance'],2); ?>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <?php if($change['attendance']<0) echo'(down by '; else echo'(up by '; echo round(abs($global_stats['attendance']),2).")"; ?></p>
+			
+			
+			
+			
+			
 			</div>
 	
 
@@ -158,21 +172,22 @@ padding-top: 20px;
 						$value +=  ($class_stats['agraders_prev'])*10;
 						$value  -= $class_stats['attention']*10;
 						if($value>50)
-							$g=1;
+							$g=2;
 						else
-							$g=0;
+							$g=1;
 						
 						
 						echo "
-				<div class='span4' style='box-shadow: 5px 5px 5px #888888'>
+				<div class='span4' style='box-shadow: 5px 5px 5px #000000'>
 					<h2 style='text-align:left' id='pic' class='fonth'>&nbsp&nbsp<a href='".$pageURL."?q=".$clas."'>Class".$clas."</a>
-					<img class='float-right' src='images/1.jpg'></h2><br>
-					<p style='text-align:left'>&nbsp&nbsp&nbsp&nbspClass Teacher:  ".$class_stats['class_teacher']."</p>
-					<p style='text-align:left'>&nbsp&nbsp&nbsp&nbspClass Monitor:  ".$class_stats['class_monitor']."</p>
-					<p style='text-align:left'>&nbsp&nbsp&nbsp&nbspA Graders:  ".$class_stats['agraders']."</p>
-					<p style='text-align:left'>&nbsp&nbsp&nbsp&nbspStrength:  ".$class_stats['strength']."</p>
-					<p style='text-align:left'>&nbsp&nbsp&nbsp&nbspStudents Needing Attention:  ".$class_stats['attention']."</p>
+					<img class='float-right' src='images/".$g.".jpg'/></h2><br>
+					<p style='text-align:left'>&nbsp&nbsp&nbsp&nbsp<b>Class Teacher:</b>  ".$class_stats['class_teacher']."</p>
+					<p style='text-align:left'>&nbsp&nbsp&nbsp&nbsp<b>Class Monitor:</b>  ".$class_stats['class_monitor']."</p>
+					<p style='text-align:left'>&nbsp&nbsp&nbsp&nbsp<b>A Graders:  </b>".$class_stats['agraders']."</p>
+					<p style='text-align:left'>&nbsp&nbsp&nbsp&nbsp<b>Strength:  </b>".$class_stats['strength']."</p>
+					<p style='text-align:left'>&nbsp&nbsp&nbsp&nbsp<b>Students Needing Attention:  </b>".$class_stats['attention']."</p>
 				</div>" ;
+					
 					$j++;
 					$s = "".$j;
 					if(!isset($user_info[$s]['name'])) break;
@@ -187,34 +202,112 @@ padding-top: 20px;
 				$students = get_student($path);
 				$stats = get_class_stats($path);	?>
 				
-				<div class="hero-unit">
-			<h1>Hello, world!</h1>
-			<p>This is a template for a simple marketing or informational website. It includes a large
-			callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-			<p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+				<div class="span5 new">
+				
+				<h3>Class <?php echo $path;?></h3>
+				<?php
+				
+				echo "
+				<form class='form-horizontal'>
+					
+					
+					 <div class='control-group'>
+					<label class='control-label' for='inputEmail'><b>Strength:</b></label>
+					<div class='controls'>
+					 ".$stats['strength']."
+					</div>
+					</div>
+				
+					<div class='control-group'>
+					<label class='control-label' for='inputEmail'><b>Attendence :</b></label>
+					<div class='controls'>
+					 ".$stats['attendance']."
+					</div>
+					</div>
+					
+					
+					<div class='control-group'>
+					<label class='control-label' for='inputEmail'><b>A Graders :</b></label>
+					<div class='controls'>
+					 ".$stats['agraders']."
+					</div>
+					</div>
+					</div>
+				</form>
+				
+				<div class='span5 new'>
+				<form class='form-horizontal'>
+				
+					<h3></h3>
+					<div class='control-group'>
+					<label class='control-label' for='inputEmail'><b>Students need Attention :</b></label>
+					<div class='controls'>
+					 ".$stats['attention']."
+					</div>
+					</div>
+					
+					<div class='control-group'>
+					<label class='control-label' for='inputEmail'><b>Class Teacher :</b></label>
+					<div class='controls'>
+					 ".$stats['class_teacher']."
+					</div>
+					</div>
+					
+					<div class='control-group'>
+					<label class='control-label' for='inputEmail'><b>Class Monitor :</b></label>
+					<div class='controls'>
+					 ".$stats['class_monitor']."
+					</div>
+					</div>
+					</form>
+					</div><br \>
+					<br><br><br><br>
+					"
+					?>
+					
+					
+					
+					
+				<br><br><br><br><br><br>	
+				
+				
+				
+				
+				
+				
 		</div>
 				
 			<?php	
-				$j=0;	
+				$j=0;
+				
 				while(isset($students[$j]['uid']))
 				{
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
+				switch($students[$j]['cum_grade']){
+				case'A':
+					$factor1=100;
+					break;	
+				case'B':
+					$factor1=80;
+					break;
+				case'C':
+					$factor1=60;
+					break;
+				case'D':
+					$factor1=40;
+					break;
+				}
+				$factor2 = 	$students[$j]['cum_att'];
+				$factor3 = $students[$j]['cum_involvement'];
+				$factor4= $students[$j]['cum_complain']*5;
+				$total = $factor1+$factor2+$factor3-$factor4;
+				if($total<150) $img=1; else $img=2;
 				$url=substr_replace($pageURL,'', -5);
-				echo "<div class='span4' style='box-shadow: 5px 5px 5px #888888'>
-					<h2 style='text-align:left' class='fonth'>&nbsp&nbsp<a href='".$url."?q=k".$students[$j]['uid']."'>".$students[$j]['name']."</a></h2><br>
-					<p style='text-align:left'>&nbsp&nbsp&nbsp&nbspGrades:  ".$students[$j]['cum_grade']."</p>
-					<p style='text-align:left'>&nbsp&nbsp&nbsp&nbspAttendance:  ".$students[$j]['cum_att']."</p>
-					<p style='text-align:left'>&nbsp&nbsp&nbsp&nbspParticipation in Class:  ".$students[$j]['cum_involvement']."</p>
-					<p style='text-align:left'>&nbsp&nbsp&nbsp&nbspComplains Against:  ".$students[$j]['cum_complain']."</p>
+				echo "<div class='span4' style='box-shadow: 5px 5px 5px #000000'>
+					<h2 style='text-align:left' class='fonth'>&nbsp&nbsp<a href='".$url."?q=k".$students[$j]['uid']."'>".$students[$j]['name']."</a><img class='float-right' src='images/".$img.".jpg'></h2><br>
+					<p style='text-align:left'>&nbsp&nbsp&nbsp&nbsp<b>Grades:</b>  ".$students[$j]['cum_grade']."</p>
+					<p style='text-align:left'>&nbsp&nbsp&nbsp&nbsp<b>Attendance:</b>  ".$students[$j]['cum_att']."</p>
+					<p style='text-align:left'>&nbsp&nbsp&nbsp&nbsp<b>Participation in Class:</b>  ".$students[$j]['cum_involvement']."</p>
+					<p style='text-align:left'>&nbsp&nbsp&nbsp&nbsp<b>Complains Against:</b>  ".$students[$j]['cum_complain']."</p>
 				</div>" ;
 				$j++;
 				}	?>
@@ -227,8 +320,26 @@ padding-top: 20px;
 				$new = substr_replace($path, "", 0,1);
 				$student_data = get_student_info($new);
 				//echo "hindi marks are".$student_data['hindi_prev'];
-				
-				echo"<div class='row new'>
+				switch($student_data['cum_grade']){
+				case'A':
+					$factor1=100;
+					break;	
+				case'B':
+					$factor1=80;
+					break;
+				case'C':
+					$factor1=60;
+					break;
+				case'D':
+					$factor1=40;
+					break;
+				}
+				$factor2 = 	$student_data['cum_att'];
+				$factor3 = $student_data['cum_involvement'];
+				$factor4= $student_data['cum_complain']*5;
+				$total = $factor1+$factor2+$factor3-$factor4;
+				if($total<200) $img=1; else $img=2;
+				echo"<div class='row new' ><img class='float-right' src='images/".$img.".jpg'/>
 				
 				
 				<form class='form-horizontal'>
@@ -321,6 +432,7 @@ padding-top: 20px;
 					<label class='control-label' for='inputEmail'>Complains Against</label>
 					<div class='controls'>
 					<input type='text' name='complain' >
+					<input type='hidden' name='redirect' value='".$pageURL."'>
 					</div>
 					</div>
 					

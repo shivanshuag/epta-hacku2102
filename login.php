@@ -1,9 +1,10 @@
 <?php
 require("includes/include.php");
 
-if(logged_in())
+if(logged_in() && $_SESSION['role'] == "teacher")
     redirect_to("index.php");
-	
+else if (logged_in() && $_SESSION['role'] == "student")
+	redirect_to("parent.php");	
 if(isset($_POST['username']) && isset($_POST['password'])) {
 	$user = verify_credentials($_POST);
 	if(!empty($user))
@@ -12,6 +13,8 @@ if(isset($_POST['username']) && isset($_POST['password'])) {
 			
 		if($user['role'] == "teacher"){
 			redirect_to("index.php");}
+		else if($user['role'] == "student")
+				redirect_to("parent.php");
 		//set the proper redirect for parents	
 		//if($user['role'] == "student")
 		//	redirect_to("");
@@ -28,7 +31,7 @@ if(isset($_POST['username']) && isset($_POST['password'])) {
 <!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
     <head>
-		
+			<center><img src = "images/ePTA.png"></center>
 		<style type="text/css">
 		body {
 		background-image : url("images/background.jpg");
@@ -51,6 +54,7 @@ if(isset($_POST['username']) && isset($_POST['password'])) {
         <!-- <script src="js/jquery-1.7.2.min.js" type="text/javascript" ></script> -->
     </head>
     <body>
+		
         <div class="container">
             
             <section>                
@@ -72,7 +76,7 @@ if(isset($_POST['username']) && isset($_POST['password'])) {
                                     <input id="password" name="password" required="required" type="password" placeholder=""/> 
                                
 									<br>
-                                    <input type="submit" value="Login" class= "btn btn-success"/> 
+                                    <input type="submit" value="Login" class= "btn btn-inverse"/> 
                             </form>
 						</div>
 					</div>  
